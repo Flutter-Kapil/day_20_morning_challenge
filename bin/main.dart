@@ -29,7 +29,9 @@ int josephus(int soldiers, int x) {
       soldiersList.removeAt(i);
     }
     soldiersList.removeWhere((x) => x == 0);
-    var list = []..addAll(tempList)..addAll(soldiersList);//this is causing issue.
+    var list = []
+      ..addAll(tempList)
+      ..addAll(soldiersList); //this is causing issue.
     soldiersList = list;
   }
 //--------------------
