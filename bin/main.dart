@@ -44,7 +44,7 @@ int trimMore(var numbers, int x) {
     for (int i = 0; numbers.length < x; i++) {
       numbers.add(numbers[i]);
     }
-    print(numbers);
+
     int removeNumber = numbers[numbers.length - 1];
     numbers.removeWhere((x) => x == removeNumber);
 
@@ -112,6 +112,6 @@ main() {
     [0, 1, 1, 1, 1, 0, 0]
   ], 2));
 
-  print(josephus(10, 3));
-  print(trimMore([10, 4], 3));
+  print(josephus(22, 3));
+  print(trimMore([19, 5], 3));
 }
