@@ -7,33 +7,32 @@
 // in a circle. Every third soldier is to be killed by their captors, continuing
 // around the circle until only one soldier remains. He is to be freed. Assuming
 // you would like to stay alive, at what position in the circle would you stand?
-int josephus(int total, int x) {
-  //create list of numbers with total as length
-  List totalList = List.generate(total, (i) => i + 1);
+List josephus(int soldiers, int x) {
+  //create list of soldiersList with total as length
+  List soldiersList = List.generate(soldiers, (i) => i + 1);
   //1,2,3,4,5
-  print(totalList);
-  List tempList = [];
-  while (totalList.length > 1) {
-    tempList = totalList;
-    //tel 1,2,3,4,5
-    for (int i = 1; i <= totalList.length; i++) {
-      if (i % x == 0) {
-        print("1 temp $tempList  total $totalList");
-        tempList.remove(totalList[i - 1]);
-        totalList[i - 1] = 0;
-      } else {
-        print("2 temp $tempList  total $totalList");
-        int tempNo = totalList[i - 1];
-        tempList.remove(totalList[i - 1]);
-        tempList.add(tempNo);
-        print("3 temp $tempList  total $totalList");
-      }
-      print("4 temp $tempList  total $totalList");
+  while (soldiersList.length >= x) {
+    int remaining = soldiersList.length % x;
+    int listLength = soldiersList.length;
+    List tempList = [];
+    for (int i = listLength - remaining; i < listLength; i++) {
+      tempList.add(soldiersList[i]);
     }
-    totalList = tempList;
-    print(totalList);
+    for (int i = 1; i <= listLength; i++) {
+      if (i % x == 0) {
+        soldiersList[i - 1] = 0;
+      }
+    }
+    //instead of soldiersList.length it should be a variable which doesn't change, reset it at the end of everything
+    // i= soldiersList.length-1  >= soldiersList.length-remaining
+    for (int i = listLength - 1; i >= listLength - remaining; i--) {
+      soldiersList.removeAt(i);
+    }
+    soldiersList.removeWhere((x) => x == 0);
+    var list = []..addAll(tempList)..addAll(soldiersList);
+    soldiersList = list;
   }
-  return totalList[0];
+  return soldiersList;
 }
 // Generalize this problem by creating a function that accepts the number of
 // soldiers n and the interval at which they are killed i, and returns the
@@ -91,5 +90,5 @@ main() {
     [0, 1, 1, 1, 1, 0, 0]
   ], 2));
 
-  print(josephus(5, 2));
+  print(josephus(10, 3));
 }
