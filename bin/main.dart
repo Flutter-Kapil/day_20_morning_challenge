@@ -35,21 +35,24 @@ List josephus(int soldiers, int x) {
   return soldiersList;
 }
 
+//this function when soldiers list length reduces to less than x. that is if every 3rd soldier
+//is to be killed then total number of soldiers left are 2
 int trimMore(var numbers, int x) {
 //     int x=3;
 //   List<int> numbers =[10,4];
-  for (int i = 0; numbers.length < x; i++) {
-    numbers.add(numbers[i]);
-  }
-  print(numbers);
-  int removeNumber = numbers[numbers.length - 1];
-  numbers.removeWhere((x) => x == removeNumber);
-  print(numbers);
+  while (numbers.length <= x) {
+    for (int i = 0; numbers.length < x; i++) {
+      numbers.add(numbers[i]);
+    }
+    print(numbers);
+    int removeNumber = numbers[numbers.length - 1];
+    numbers.removeWhere((x) => x == removeNumber);
 
-  List<int> unique = numbers.toSet().toList();
-  if (unique.length == 1) {
-    x = unique[0];
-    print('lets end lo and return result');
+    List<int> unique = numbers.toSet().toList();
+    if (unique.length == 1) {
+      x = unique[0];
+      break;
+    }
   }
   return x;
 }
@@ -110,5 +113,5 @@ main() {
   ], 2));
 
   print(josephus(10, 3));
-  trimMore(josephus(10, 3), 3);
+  print(trimMore([10, 4], 3));
 }
