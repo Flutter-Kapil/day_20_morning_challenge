@@ -7,9 +7,9 @@
 // in a circle. Every third soldier is to be killed by their captors, continuing
 // around the circle until only one soldier remains. He is to be freed. Assuming
 // you would like to stay alive, at what position in the circle would you stand?
-int josephus(int soldiers, int x) {
+List josephus(int soldiers, int x) {
   //create list of soldiersList with total as length
-  List<int> soldiersList = List.generate(soldiers, (i) => i + 1);
+  List soldiersList = List.generate(soldiers, (i) => i + 1);
   //1,2,3,4,5
   while (soldiersList.length >= x) {
     int remaining = soldiersList.length % x;
@@ -29,18 +29,13 @@ int josephus(int soldiers, int x) {
       soldiersList.removeAt(i);
     }
     soldiersList.removeWhere((x) => x == 0);
-    var list = []
-      ..addAll(tempList)
-      ..addAll(soldiersList); //this is causing issue.
+    var list = []..addAll(tempList)..addAll(soldiersList);
     soldiersList = list;
   }
-//--------------------
-
-  //------------------
-  return trimMore(soldiersList, x);
+  return soldiersList;
 }
 
-int trimMore(List<int> numbers, int x) {
+int trimMore(var numbers, int x) {
 //     int x=3;
 //   List<int> numbers =[10,4];
   for (int i = 0; numbers.length < x; i++) {
@@ -115,4 +110,5 @@ main() {
   ], 2));
 
   print(josephus(10, 3));
+  trimMore(josephus(10, 3), 3);
 }
