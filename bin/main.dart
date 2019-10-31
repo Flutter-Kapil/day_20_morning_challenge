@@ -7,7 +7,7 @@
 // in a circle. Every third soldier is to be killed by their captors, continuing
 // around the circle until only one soldier remains. He is to be freed. Assuming
 // you would like to stay alive, at what position in the circle would you stand?
-List josephus(int soldiers, int x) {
+int josephus(int soldiers, int x) {
   //create list of soldiersList with total as length
   List soldiersList = List.generate(soldiers, (i) => i + 1);
   //1,2,3,4,5
@@ -29,15 +29,16 @@ List josephus(int soldiers, int x) {
       soldiersList.removeAt(i);
     }
     soldiersList.removeWhere((x) => x == 0);
+
     var list = []..addAll(tempList)..addAll(soldiersList);
-    soldiersList = list;
+    soldiersList = add2Lists(tempList, soldiersList);
   }
-  return soldiersList;
+  return trimMore(soldiersList, x);
 }
 
 //this function when soldiers list length reduces to less than x. that is if every 3rd soldier
 //is to be killed then total number of soldiers left are 2
-int trimMore(var numbers, int x) {
+int trimMore(List numbers, int x) {
 //     int x=3;
 //   List<int> numbers =[10,4];
   while (numbers.length <= x) {
@@ -55,6 +56,17 @@ int trimMore(var numbers, int x) {
     }
   }
   return x;
+}
+
+List add2Lists(List list1, List list2) {
+  List<int> finalList = [];
+  for (int i = 0; i < list1.length; i++) {
+    finalList.add(list1[i]);
+  }
+  for (int i = 0; i < list2.length; i++) {
+    finalList.add(list2[i]);
+  }
+  return finalList;
 }
 // Generalize this problem by creating a function that accepts the number of
 // soldiers n and the interval at which they are killed i, and returns the
@@ -112,6 +124,5 @@ main() {
     [0, 1, 1, 1, 1, 0, 0]
   ], 2));
 
-  print(josephus(22, 3));
-  print(trimMore([19, 5], 3));
+  print(josephus(10, 3));
 }
